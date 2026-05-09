@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: project-yml
+# Database configuracion
+  mongodb:
+    host: localhost
+    post: 27017
+    database: mydb
