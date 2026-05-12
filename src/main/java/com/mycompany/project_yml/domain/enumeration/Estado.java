@@ -1,7 +1,17 @@
 package com.mycompany.project_yml.domain.enumeration;
 
 public enum Estado {
-    // Activo("Activo");
-    // inactivo("Inactivo");
-   // private final String value;
+    ACTIVO("Activo"),
+    INACTIVO("Inactivo");
+    private final String valor;
+
+    Estado(String valor) {
+        this.valor = valor;
+    }
+
+    public String getValor() {
+        return valor;
+    }
 }
+
+

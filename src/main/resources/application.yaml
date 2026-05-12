@@ -5,4 +5,8 @@ spring:
   mongodb:
     host: localhost
     post: 27017
-    database: mydb
+    database: ejemplo01
+  data:
+    mongodb:
+      auto-index-creation: true
+
