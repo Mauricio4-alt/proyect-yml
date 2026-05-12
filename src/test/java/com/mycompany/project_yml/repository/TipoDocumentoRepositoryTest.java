@@ -13,7 +13,7 @@ class TipoDocumentoRepositoryTest {
 
     @Test
     void insert() {
-        TipoDocumento tipoDocumento = new TipoDocumento(null,"CC", "Cedula ciudadania",Estado.ACTIVO);
+        TipoDocumento tipoDocumento = new TipoDocumento(null,"CC", Estado.ACTIVO,"Cedula ciudadania");
         tipoDocumentoRepository.insert(tipoDocumento);
     }
 
