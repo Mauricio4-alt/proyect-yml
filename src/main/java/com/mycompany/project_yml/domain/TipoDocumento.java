@@ -68,7 +68,7 @@ public class TipoDocumento implements Serializable {
 
     @Nonnull
     public String getSigla() {
-        return sigla;
+        return this.sigla;
     }
 
     public void setId(String id) {

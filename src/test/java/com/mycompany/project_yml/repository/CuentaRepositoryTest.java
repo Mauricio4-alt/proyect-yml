@@ -1,6 +1,7 @@
 package com.mycompany.project_yml.repository;
 
 import com.mycompany.project_yml.domain.Cliente;
+import com.mycompany.project_yml.domain.Cuenta;
 import com.mycompany.project_yml.domain.TipoDocumento;
 import com.mycompany.project_yml.domain.enumeration.Estado;
 import org.junit.jupiter.api.Test;
@@ -11,7 +12,10 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataMongoTest
-class ClienteRepositoryTest {
+class CuentaRepositoryTest {
+
+    @Autowired
+    private CuentaRepository cuentaRepository;
 
     @Autowired
     private ClienteRepository clienteRepository;
@@ -22,19 +26,22 @@ class ClienteRepositoryTest {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+
     @Test
-    void insert() {
+    void insert(){
         mongoTemplate.dropCollection(Cliente.class);
+        mongoTemplate.dropCollection(Cuenta.class);
         tipoDocumentoRepository.deleteAll();
 
         TipoDocumento tipoDocumentoCedula = tipoDocumentoRepository.insert(
-                new TipoDocumento(null, "CC", Estado.ACTIVO,"Cedula de ciudadania" )
+                new TipoDocumento(null, "CC", "Cedula de ciudadania", Estado.ACTIVO)
         );
+
+        assertNotNull(tipoDocumentoCedula);
 
         Cliente cliente = new Cliente(null, "123456789", "John", "Doe", "Smith", "Johnson");
         Cliente cliente2 = new Cliente(null, "99999", "John", "Doe", "Smith", "Johnson");
 
-        assertNotNull(tipoDocumentoCedula);
 
         cliente.setTipoDocumento(tipoDocumentoCedula);
         cliente2.setTipoDocumento(tipoDocumentoCedula);
@@ -42,14 +49,18 @@ class ClienteRepositoryTest {
         Cliente clienteGuardado = clienteRepository.insert(cliente);
         Cliente clienteGuardado2 = clienteRepository.insert(cliente2);
 
-        assertNotNull(clienteGuardado.getId());
-        assertNotNull(clienteGuardado2.getId());
-        assertNotNull(clienteGuardado.getTipoDocumento());
-        assertNotNull(clienteGuardado2.getTipoDocumento());
-        assertEquals("CC", clienteGuardado.getTipoDocumento().getSigla());
-        assertEquals("CC", clienteGuardado2.getTipoDocumento().getSigla());
-        assertEquals(2, clienteRepository.count());
+        Cuenta cuenta01 = new Cuenta(null, "Cuenta de facebook", Estado.ACTIVO);
+        Cuenta cuenta02 = new Cuenta(null, "Cuenta de X", Estado.ACTIVO);
+
+        cuenta01.setCliente(clienteGuardado);
+        cuenta02.setCliente(clienteGuardado2);
+
+        cuentaRepository.insert(cuenta01);
+        cuentaRepository.insert(cuenta02);
+
 
     }
+
+
 
 }

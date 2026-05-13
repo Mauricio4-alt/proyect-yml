@@ -8,12 +8,11 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 import org.springframework.data.mongodb.core.mapping.Field;
-import org.springframework.data.web.JsonPath;
 
 import java.io.Serial;
 import java.io.Serializable;
 
-@Document(collection = "clientes")
+@Document(collection = "cliente")
 public class Cliente implements Serializable {
 
     @Serial
@@ -32,7 +31,6 @@ public class Cliente implements Serializable {
     @Field("primer_nombre")
     private String primerNombre;
 
-
     @Size(max = 50)
     @Field("segundo_nombre")
     private String segundoNombre;
@@ -42,28 +40,18 @@ public class Cliente implements Serializable {
     @Field("primer_apellido")
     private String primerApellido;
 
-
     @Size(max = 50)
     @Field("segundo_apellido")
     private String segundoApelligo;
 
-
-    @DocumentReference
-    @JsonIgnoreProperties
-    private Cuenta cuenta;
-
-    public TipoDocumento getTipoDocumento() {
-        return tipoDocumento;
-    }
-
-    public void setTipoDocumento(TipoDocumento tipoDocumento) {
-        this.tipoDocumento = tipoDocumento;
-    }
-
     @DBRef
     @Field("tipo_documento")
     @JsonIgnoreProperties(value = { "clientes" }, allowSetters = true)
-    public TipoDocumento tipoDocumento;
+    private TipoDocumento tipoDocumento;
+
+    @DocumentReference
+    @Field("cuenta")
+    private Cuenta cuenta;
 
     public Cliente(String id, @Nonnull String numeroDocumento, @Nonnull String primerNombre, String segundoNombre, @Nonnull String primerApellido, String segundoApelligo) {
         this.id = id;
@@ -91,12 +79,11 @@ public class Cliente implements Serializable {
         this.numeroDocumento = numeroDocumento;
     }
 
-    @Nonnull
     public String getPrimerNombre() {
         return primerNombre;
     }
 
-    public void setPrimerNombre(@Nonnull String primerNombre) {
+    public void setPrimerNombre(String primerNombre) {
         this.primerNombre = primerNombre;
     }
 
@@ -108,12 +95,11 @@ public class Cliente implements Serializable {
         this.segundoNombre = segundoNombre;
     }
 
-    @Nonnull
     public String getPrimerApellido() {
         return primerApellido;
     }
 
-    public void setPrimerApellido(@Nonnull String primerApellido) {
+    public void setPrimerApellido(String primerApellido) {
         this.primerApellido = primerApellido;
     }
 
@@ -125,6 +111,13 @@ public class Cliente implements Serializable {
         this.segundoApelligo = segundoApelligo;
     }
 
+    public TipoDocumento getTipoDocumento() {
+        return tipoDocumento;
+    }
+
+    public void setTipoDocumento(TipoDocumento tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
+    }
 
     public Cuenta getCuenta() {
         return cuenta;
