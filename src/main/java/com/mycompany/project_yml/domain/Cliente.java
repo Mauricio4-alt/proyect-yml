@@ -1,11 +1,14 @@
 package com.mycompany.project_yml.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.annotation.Nonnull;
 import jakarta.validation.constraints.Size;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.web.JsonPath;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -45,6 +48,10 @@ public class Cliente implements Serializable {
     private String segundoApelligo;
 
 
+    @DocumentReference
+    @JsonIgnoreProperties
+    private Cuenta cuenta;
+
     public TipoDocumento getTipoDocumento() {
         return tipoDocumento;
     }
@@ -55,6 +62,7 @@ public class Cliente implements Serializable {
 
     @DBRef
     @Field("tipo_documento")
+    @JsonIgnoreProperties(value = { "clientes" }, allowSetters = true)
     public TipoDocumento tipoDocumento;
 
     public Cliente(String id, @Nonnull String numeroDocumento, @Nonnull String primerNombre, String segundoNombre, @Nonnull String primerApellido, String segundoApelligo) {
@@ -64,5 +72,65 @@ public class Cliente implements Serializable {
         this.segundoNombre = segundoNombre;
         this.primerApellido = primerApellido;
         this.segundoApelligo = segundoApelligo;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @Nonnull
+    public String getNumeroDocumento() {
+        return numeroDocumento;
+    }
+
+    public void setNumeroDocumento(@Nonnull String numeroDocumento) {
+        this.numeroDocumento = numeroDocumento;
+    }
+
+    @Nonnull
+    public String getPrimerNombre() {
+        return primerNombre;
+    }
+
+    public void setPrimerNombre(@Nonnull String primerNombre) {
+        this.primerNombre = primerNombre;
+    }
+
+    public String getSegundoNombre() {
+        return segundoNombre;
+    }
+
+    public void setSegundoNombre(String segundoNombre) {
+        this.segundoNombre = segundoNombre;
+    }
+
+    @Nonnull
+    public String getPrimerApellido() {
+        return primerApellido;
+    }
+
+    public void setPrimerApellido(@Nonnull String primerApellido) {
+        this.primerApellido = primerApellido;
+    }
+
+    public String getSegundoApelligo() {
+        return segundoApelligo;
+    }
+
+    public void setSegundoApelligo(String segundoApelligo) {
+        this.segundoApelligo = segundoApelligo;
+    }
+
+
+    public Cuenta getCuenta() {
+        return cuenta;
+    }
+
+    public void setCuenta(Cuenta cuenta) {
+        this.cuenta = cuenta;
     }
 }
